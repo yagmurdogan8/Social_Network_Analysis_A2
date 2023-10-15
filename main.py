@@ -21,8 +21,10 @@ for line in lines:
         print(f"Username: {username}")
         print(f"Tweet: {tweet}")
 
+        mentioned_users_list = {}
+
         for users in username:
             for mention in tweet:
                 if mention.startswith('@'):
                     mention = mention[1:]  # for getting only the username without at
-
+                    mentioned_users_list.keys().add(mention)
