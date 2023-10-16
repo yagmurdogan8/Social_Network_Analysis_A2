@@ -1,7 +1,8 @@
 import csv
 import networkx as nx
-# import io
 import urllib.request
+
+# Q1.1
 
 # parsing data from url
 small_data_url = urllib.request.urlopen("https://liacs.leidenuniv.nl/~takesfw/SNACS/twitter-small.tsv")
@@ -46,7 +47,7 @@ for index, line in enumerate(lines):  # burada index almada sorun yasadim enum e
         print("Line no: ", index + 1, "Tweet does not have tab spaces that I can split!!!")
         # last line has a new line after it that's why i added this
 
-mentionGraph = nx.Graph()
+mentionGraph = nx.DiGraph()
 
 for user, mentions in mentioned_users_list.items():
     for mentioned_user in mentions:
@@ -64,10 +65,15 @@ with open("weighted_edge_list.csv", mode='w', newline='', encoding="utf-8") as o
         weight = data['weight']
         writer.writerow([source, target, weight])
 
-print("Nodes: ", mentionGraph.nodes)
-print("Edges: ", mentionGraph.edges)
+# Q1.2
+print("Nodes: ", mentionGraph.nodes())
+print("Edges: ", mentionGraph.edges())
+
 print("Strongly connected components: ", nx.strongly_connected_components(mentionGraph))
+strongly_connected_components = list(nx.strongly_connected_components(mentionGraph))
+print("Number of strongy connected components: ", len(strongly_connected_components))
+
 print("Weakly connected components: ", nx.weakly_connected_components(mentionGraph))
-print("Number of strongy connected components: ", len(nx.strongly_connected_components(mentionGraph)))
-print("Number of weakly connected components: ", len(nx.weakly_connected_components(mentionGraph)))
+weakly_connected_components = list(nx.weakly_connected_components(mentionGraph))
+print("Number of weakly connected components: ", len(weakly_connected_components))
 
