@@ -109,4 +109,9 @@ plt.xlabel('Outdegree')
 plt.ylabel('Frequency')
 plt.show()
 
-average_clustering_coefficient = nx.average_clustering(mentionGraph)
+# average cc directed & undirected
+directed_average_clustering_coefficient = nx.average_clustering(mentionGraph)
+print("Directed average clustering coefficint: ", directed_average_clustering_coefficient)
+
+undirected_average_clustering_coefficient = nx.average_clustering(mentionGraph, subgraph = False)
+print("Undirected average clustering coefficient: ", undirected_average_clustering_coefficient)
