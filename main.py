@@ -1,6 +1,7 @@
 import csv
 import networkx as nx
 import urllib.request
+import matplotlib.pyplot as plt
 
 # Q1.1
 
@@ -91,3 +92,21 @@ for i, component in enumerate(weakly_connected_components):
 # density = 2m/n.(n-1)
 density = (2 * len(mentionGraph.edges())) / (len(mentionGraph.nodes()) * (len(mentionGraph.nodes()) - 1))
 print("Density of the network: ", density)
+
+# indegree and outdegree distributions
+indegree = dict(mentionGraph.in_degree())
+outdegree = dict(mentionGraph.out_degree())
+
+plt.hist(list(indegree.values()), bins=20, color='r')
+plt.title('Indegree Distribution')
+plt.xlabel('Indegree')
+plt.ylabel('Frequency')
+plt.show()
+
+plt.hist(list(outdegree.values()), bins=20, color='r')
+plt.title('Outdegree Distribution')
+plt.xlabel('Outdegree')
+plt.ylabel('Frequency')
+plt.show()
+
+average_clustering_coefficient = nx.average_clustering(mentionGraph)
