@@ -25,19 +25,18 @@ for index, line in enumerate(lines):  # burada index almada sorun yasadim enum e
         print("Tweet: ", tweet)
 
         words = tweet.split()
+        mentioned_users = []
+
         for word in words:
             if word.startswith("@"):
-                mentioned_users = word[1:]
-                # print(mentioned_users)
+                mentioned_user = word[1:]
+                mentioned_users.append(mentioned_user)
 
-                if username in mentioned_users_list:
-                    mentioned_users_list[username].extend(mentioned_users)
+        mentioned_users_list[username] = mentioned_users
 
-                else:
-                    mentioned_users_list[username] = []
-
-        for username, mentions in mentioned_users_list.items():
-            print(username, " mentioned: ", mentioned_users)
+        # Print mentioned users for the current user
+        if mentioned_users:
+            print(username, " mentioned: ", ", ".join(mentioned_users))
 
         print("-----------------------------------------------------")
 
