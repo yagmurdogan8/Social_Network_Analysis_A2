@@ -6,19 +6,23 @@ import urllib.request
 small_data_url = urllib.request.urlopen("https://liacs.leidenuniv.nl/~takesfw/SNACS/twitter-small.tsv")
 large_data_url = urllib.request.urlopen("https://liacs.leidenuniv.nl/~takesfw/SNACS/twitter-larger.tsv")
 
-small_data = small_data_url.read().decode('utf-8')
+small_data = small_data_url.read().decode('utf-8')  #str
 large_data = large_data_url.read().decode('utf-8')
 
 lines = small_data.split('\n')
 
 for line in lines:
     parts = line.strip().split('\t')
+    if len(parts) >= 3:
 
-    date, username, tweet = parts[0], parts[1], parts[2]
+        date, username, tweet = parts[0], parts[1], parts[2]
 
-    print(f"Date: {date}")
-    print(f"Username: {username}")
-    print(f"Tweet: {tweet}")
+        print(f"Date: ", date)
+        print(f"Username: {username}")
+        print(f"Tweet: {tweet}")
+    else:
+        print("Tweet does not have tab spaces that I can split!!!")  # last line has a new line after it that's why i
+        # added this
 
     # mentioned_users_list = {}
     #
