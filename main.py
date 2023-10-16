@@ -11,15 +11,18 @@ large_data = large_data_url.read().decode('utf-8')
 
 lines = small_data.split('\n')
 
-for line in lines:
+for index, line in enumerate(lines):
+
     parts = line.strip().split('\t')
     if len(parts) >= 3:
 
         date, username, tweet = parts[0], parts[1], parts[2]
 
-        print(f"Date: ", date)
-        print(f"Username: {username}")
-        print(f"Tweet: {tweet}")
+        print("Line no: ", index + 1)
+        print("Date: ", date)
+        print("Username: ", username)
+        print("Tweet: ", tweet)
+        print("-----------------------------------------------------")
     else:
         print("Tweet does not have tab spaces that I can split!!!")  # last line has a new line after it that's why i
         # added this
