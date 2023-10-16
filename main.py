@@ -49,12 +49,24 @@ for index, line in enumerate(lines):  # burada index almada sorun yasadim enum e
     else:
         print("Tweet does not have tab spaces that I can split!!!")  # last line has a new line after it that's why i
         # added this
+Graph = nx.Graph()
 
-    # Create a CSV file for the weighted edge list
-    with open("weighted_edge_list.csv", mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(["Source", "Target", "Weight"])
-        for edge in Graph.edges(data=True):
-            source, target, data = edge
-            weight = data['weight']
-            writer.writerow([source, target, weight])
+for user, mentions in mentioned_users_list.items():
+    for mentioned_user in mentions:
+        Graph.add_edge(user, mentioned_user)
+
+# Create a CSV file for the weighted edge list
+with open("weighted_edge_list.csv", mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(["Source", "Target"])
+    for edge in Graph.edges():
+        writer.writerow(edge)
+#
+# # Create a CSV file for the weighted edge list
+# with open("weighted_edge_list.csv", mode='w', newline='') as file:
+#     writer = csv.writer(file)
+#     writer.writerow(["Source", "Target", "Weight"])
+#     for edge in Graph.edges(data=True):
+#         source, target, data = edge
+#         weight = data['weight']
+#         writer.writerow([source, target, weight])
