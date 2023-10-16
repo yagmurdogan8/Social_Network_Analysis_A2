@@ -3,7 +3,7 @@ import networkx as nx
 import urllib.request
 import matplotlib.pyplot as plt
 
-# Q1.1
+# Q3.1
 
 # parsing data from url
 small_data_url = urllib.request.urlopen("https://liacs.leidenuniv.nl/~takesfw/SNACS/twitter-small.tsv")
@@ -66,7 +66,7 @@ with open("weighted_edge_list.csv", mode='w', newline='', encoding="utf-8") as o
         weight = data['weight']
         writer.writerow([source, target, weight])
 
-# Q1.2
+# Q3.2
 # nodes
 print("Nodes: ", mentionGraph.nodes())
 print("No of nodes: ", len(mentionGraph.nodes()))
@@ -113,5 +113,5 @@ plt.show()
 directed_average_clustering_coefficient = nx.average_clustering(mentionGraph)
 print("Directed average clustering coefficint: ", directed_average_clustering_coefficient)
 
-undirected_average_clustering_coefficient = nx.average_clustering(mentionGraph, subgraph = False)
+undirected_average_clustering_coefficient = nx.average_clustering(mentionGraph, subgraph=False)
 print("Undirected average clustering coefficient: ", undirected_average_clustering_coefficient)
