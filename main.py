@@ -10,8 +10,6 @@ large_data_url = urllib.request.urlopen("https://liacs.leidenuniv.nl/~takesfw/SN
 small_data = small_data_url.read().decode('utf-8')  # str
 large_data = large_data_url.read().decode('utf-8')
 
-Graph = nx.Graph()
-
 lines = small_data.split('\n')
 mentioned_users_list = {}
 
@@ -42,31 +40,26 @@ for index, line in enumerate(lines):  # burada index almada sorun yasadim enum e
             print(username, " mentioned: ", ", ".join(mentioned_users))
             print(len(mentioned_users))
 
-        Graph.add_weighted_edges_from(mentioned_users)
-
         print("-----------------------------------------------------")
 
     else:
-        print("Tweet does not have tab spaces that I can split!!!")  # last line has a new line after it that's why i
-        # added this
-Graph = nx.Graph()
+        print("Line no: ", index + 1, "Tweet does not have tab spaces that I can split!!!")
+        # last line has a new line after it that's why i added this
+
+mentionGraph = nx.Graph()
 
 for user, mentions in mentioned_users_list.items():
     for mentioned_user in mentions:
-        Graph.add_edge(user, mentioned_user)
+        if not mentionGraph.has_edge(user, mentioned_user):
+            mentionGraph.add_edge(user, mentioned_user, weight=1)
+        else:
+            mentionGraph[user][mentioned_user]["weight"] += 1
 
 # Create a CSV file for the weighted edge list
 with open("weighted_edge_list.csv", mode='w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(["Source", "Target"])
-    for edge in Graph.edges():
-        writer.writerow(edge)
-#
-# # Create a CSV file for the weighted edge list
-# with open("weighted_edge_list.csv", mode='w', newline='') as file:
-#     writer = csv.writer(file)
-#     writer.writerow(["Source", "Target", "Weight"])
-#     for edge in Graph.edges(data=True):
-#         source, target, data = edge
-#         weight = data['weight']
-#         writer.writerow([source, target, weight])
+    writer.writerow(["Source", "Target", "Weight"])
+    for edge in mentionGraph.edges(data=True):
+        source, target, data = edge
+        weight = data['weight']
+        writer.writerow([source, target, weight])
