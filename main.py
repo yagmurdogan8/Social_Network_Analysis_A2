@@ -30,7 +30,7 @@ for index, line in enumerate(lines):  # burada index almada sorun yasadim enum e
 
         for word in words:
             if word.startswith("@"):
-                mentioned_user = word[1:]
+                mentioned_user = word[1:]  # It did not work really, some of the nodes still has @ at beginning
                 mentioned_users.append(mentioned_user)
 
         mentioned_users_list[username] = mentioned_users
@@ -63,3 +63,11 @@ with open("weighted_edge_list.csv", mode='w', newline='', encoding="utf-8") as o
         source, target, data = edge
         weight = data['weight']
         writer.writerow([source, target, weight])
+
+print("Nodes: ", mentionGraph.nodes)
+print("Edges: ", mentionGraph.edges)
+print("Strongly connected components: ", nx.strongly_connected_components(mentionGraph))
+print("Weakly connected components: ", nx.weakly_connected_components(mentionGraph))
+print("Number of strongy connected components: ", len(nx.strongly_connected_components(mentionGraph)))
+print("Number of weakly connected components: ", len(nx.weakly_connected_components(mentionGraph)))
+
