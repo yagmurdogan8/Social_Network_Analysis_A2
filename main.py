@@ -55,9 +55,9 @@ for user, mentions in mentioned_users_list.items():
         else:
             mentionGraph[user][mentioned_user]["weight"] += 1
 
-# Create a CSV file for the weighted edge list
-with open("weighted_edge_list.csv", mode='w', newline='') as file:
-    writer = csv.writer(file)
+# csv file for the edges
+with open("weighted_edge_list.csv", mode='w', newline='', encoding="utf-8") as output_file:
+    writer = csv.writer(output_file)
     writer.writerow(["Source", "Target", "Weight"])
     for edge in mentionGraph.edges(data=True):
         source, target, data = edge
