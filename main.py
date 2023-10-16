@@ -23,8 +23,8 @@ for line in lines:
 
         mentioned_users_list = {}
 
-        for users in username:
-            for mention in tweet:
-                if mention.startswith('@'):
-                    mention = mention[1:]  # for getting only the username without at
-                    mentioned_users_list.keys().add(mention)
+        # for users in username:
+        #     for mention in tweet:
+        #         if mention.startswith('@'):
+        #             mention = mention[1:]  # for getting only the username without at
+        #             mentioned_users_list.keys().add(mention)
