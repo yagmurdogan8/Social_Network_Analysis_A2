@@ -66,14 +66,28 @@ with open("weighted_edge_list.csv", mode='w', newline='', encoding="utf-8") as o
         writer.writerow([source, target, weight])
 
 # Q1.2
+# nodes
 print("Nodes: ", mentionGraph.nodes())
+print("No of nodes: ", len(mentionGraph.nodes()))
+# edges
 print("Edges: ", mentionGraph.edges())
+print("No of edges: ", len(mentionGraph.edges()))
 
+# strongly connected comp
 print("Strongly connected components: ", nx.strongly_connected_components(mentionGraph))
 strongly_connected_components = list(nx.strongly_connected_components(mentionGraph))
 print("Number of strongy connected components: ", len(strongly_connected_components))
+for i, component in enumerate(strongly_connected_components):
+    print("Size of strongly connected component ", i + 1, ": ", len(component))
 
+# weakly connected comp
 print("Weakly connected components: ", nx.weakly_connected_components(mentionGraph))
 weakly_connected_components = list(nx.weakly_connected_components(mentionGraph))
 print("Number of weakly connected components: ", len(weakly_connected_components))
+# length is number of components size is number of nodes for each component
+for i, component in enumerate(weakly_connected_components):
+    print("Size of weakly connected component ", i + 1, ": ", len(component))
 
+# density = 2m/n.(n-1)
+density = (2 * len(mentionGraph.edges())) / (len(mentionGraph.nodes()) * (len(mentionGraph.nodes()) - 1))
+print("Density of the network: ", density)
