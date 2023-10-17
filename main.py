@@ -118,7 +118,7 @@ print("Undirected average clustering coefficient: ", undirected_average_clusteri
 
 # giant component of the undirected graph
 giant_component = max(nx.weakly_connected_components(undirectedMentionGraph), key=len)
-
+# DEVAMINI YAPAMADIM HENUZ
 
 # average distance in giant comp
 average_distance = nx.average_shortest_path_length(giant_component)
