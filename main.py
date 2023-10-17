@@ -47,55 +47,54 @@ for index, line in enumerate(lines):  # burada index almada sorun yasadim enum e
     else:
         print("Line no: ", index + 1, "Tweet does not have tab spaces that I can split!!!")
         # last line has a new line after it that's why i added this
-
-mentionGraph = nx.DiGraph()
+directedMentionGraph = nx.DiGraph()
 
 for user, mentions in mentioned_users_list.items():
     for mentioned_user in mentions:
-        if not mentionGraph.has_edge(user, mentioned_user):
-            mentionGraph.add_edge(user, mentioned_user, weight=1)
+        if not directedMentionGraph.has_edge(user, mentioned_user):
+            directedMentionGraph.add_edge(user, mentioned_user, weight=1)
         else:
-            mentionGraph[user][mentioned_user]["weight"] += 1
+            directedMentionGraph[user][mentioned_user]["weight"] += 1
 
 # csv file for the edges
 with open("weighted_edge_list.csv", mode='w', newline='', encoding="utf-8") as output_file:
     writer = csv.writer(output_file)
     writer.writerow(["Source", "Target", "Weight"])
-    for edge in mentionGraph.edges(data=True):
+    for edge in directedMentionGraph.edges(data=True):
         source, target, data = edge
         weight = data['weight']
         writer.writerow([source, target, weight])
 
+print("************ E N D     O F    Q U E S T I O N 1 ************")
+
 # Q3.2
 # nodes
-print("Nodes: ", mentionGraph.nodes())
-print("No of nodes: ", len(mentionGraph.nodes()))
+print("Nodes: ", directedMentionGraph.nodes())
+print("No of nodes: ", len(directedMentionGraph.nodes()))
 # edges
-print("Edges: ", mentionGraph.edges())
-print("No of edges: ", len(mentionGraph.edges()))
+print("Edges: ", directedMentionGraph.edges())
+print("No of edges: ", len(directedMentionGraph.edges()))
 
 # strongly connected comp
-print("Strongly connected components: ", nx.strongly_connected_components(mentionGraph))
-strongly_connected_components = list(nx.strongly_connected_components(mentionGraph))
+print("Strongly connected components: ", nx.strongly_connected_components(directedMentionGraph))
+strongly_connected_components = list(nx.strongly_connected_components(directedMentionGraph))
 print("Number of strongy connected components: ", len(strongly_connected_components))
 for i, component in enumerate(strongly_connected_components):
     print("Size of strongly connected component ", i + 1, ": ", len(component))
 
 # weakly connected comp
-print("Weakly connected components: ", nx.weakly_connected_components(mentionGraph))
-weakly_connected_components = list(nx.weakly_connected_components(mentionGraph))
+print("Weakly connected components: ", nx.weakly_connected_components(directedMentionGraph))
+weakly_connected_components = list(nx.weakly_connected_components(directedMentionGraph))
 print("Number of weakly connected components: ", len(weakly_connected_components))
-# length is number of components size is number of nodes for each component
-for i, component in enumerate(weakly_connected_components):
-    print("Size of weakly connected component ", i + 1, ": ", len(component))
+# length is number of components but what is the difference between size and length?
 
 # density = 2m/n.(n-1)
-density = (2 * len(mentionGraph.edges())) / (len(mentionGraph.nodes()) * (len(mentionGraph.nodes()) - 1))
+density = (2 * len(directedMentionGraph.edges())) / (len(directedMentionGraph.nodes()) * (len(directedMentionGraph.nodes()) - 1))
 print("Density of the network: ", density)
 
 # indegree and outdegree distributions
-indegree = dict(mentionGraph.in_degree())
-outdegree = dict(mentionGraph.out_degree())
+indegree = dict(directedMentionGraph.in_degree())
+outdegree = dict(directedMentionGraph.out_degree())
 
 plt.hist(list(indegree.values()), bins=20, color='r')
 plt.title('Indegree Distribution')
@@ -110,9 +109,10 @@ plt.ylabel('Frequency')
 plt.show()
 
 # average cc directed & undirected
-directed_average_clustering_coefficient = nx.average_clustering(mentionGraph)
+directed_average_clustering_coefficient = nx.average_clustering(directedMentionGraph)
 print("Directed average clustering coefficint: ", directed_average_clustering_coefficient)
 
-undirectedMentionGraph = nx.Graph()
+undirectedMentionGraph = directedMentionGraph.to_undirected()
 undirected_average_clustering_coefficient = nx.average_clustering(undirectedMentionGraph)
 print("Undirected average clustering coefficient: ", undirected_average_clustering_coefficient)
+
