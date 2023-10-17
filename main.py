@@ -113,5 +113,6 @@ plt.show()
 directed_average_clustering_coefficient = nx.average_clustering(mentionGraph)
 print("Directed average clustering coefficint: ", directed_average_clustering_coefficient)
 
-undirected_average_clustering_coefficient = nx.average_clustering(mentionGraph, subgraph=False)
+undirectedMentionGraph = nx.Graph()
+undirected_average_clustering_coefficient = nx.average_clustering(undirectedMentionGraph)
 print("Undirected average clustering coefficient: ", undirected_average_clustering_coefficient)
