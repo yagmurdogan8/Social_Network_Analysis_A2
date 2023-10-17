@@ -116,3 +116,10 @@ undirectedMentionGraph = directedMentionGraph.to_undirected()
 undirected_average_clustering_coefficient = nx.average_clustering(undirectedMentionGraph)
 print("Undirected average clustering coefficient: ", undirected_average_clustering_coefficient)
 
+# giant component of the undirected graph
+giant_component = max(nx.weakly_connected_components(undirectedMentionGraph), key=len)
+
+
+# average distance in giant comp
+average_distance = nx.average_shortest_path_length(giant_component)
+print("Average distnace in giant component (undirected): ", average_distance)
