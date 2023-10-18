@@ -146,9 +146,16 @@ print("************ E N D     O F    Q U E S T I O N 2 ************")
 # directedsa da ini var outu var
 
 dcloseness_centrality = nx.closeness_centrality(directedMentionGraph, distance='in')
+doutcloseness_centrality = nx.closeness_centrality(directedMentionGraph, distance='out')
+
+top_mentions = []
 
 for i in range(20):
-    max_closeness_node = max(dcloseness_centrality, key=dcloseness_centrality.get)
-    max_closeness_value = dcloseness_centrality[max_closeness_node]
-    mentioned_users_list.pop(max_closeness_node)
-    print(max_closeness_node, max_closeness_value)
+    top_closeness_node = max(dcloseness_centrality, key=dcloseness_centrality.get)
+    top_closeness_value = dcloseness_centrality[top_closeness_node]
+    if top_closeness_node in top_mentions:
+        continue
+    else:
+        top_mentions.append(top_closeness_node)
+        print((i + 1), ". user's name: ", top_closeness_node, " value: ", top_closeness_value)
+        i += 1
