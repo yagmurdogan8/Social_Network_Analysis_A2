@@ -116,10 +116,22 @@ undirectedMentionGraph = directedMentionGraph.to_undirected()
 undirected_average_clustering_coefficient = nx.average_clustering(undirectedMentionGraph)
 print("Undirected average clustering coefficient: ", undirected_average_clustering_coefficient)
 
-# giant component of the undirected graph
-giant_component = max(nx.weakly_connected_components(undirectedMentionGraph), key=len)
-# DEVAMINI YAPAMADIM HENUZ
+# # giant component of the undirected graph
+# giant_component = max(nx.weakly_connected_components(undirectedMentionGraph), key=len)
+# # DEVAMINI YAPAMADIM HENUZ
+#
+# # average distance in giant comp
+# average_distance = nx.average_shortest_path_length(giant_component)
+# print("Average distnace in giant component (undirected): ", average_distance)
 
-# average distance in giant comp
-average_distance = nx.average_shortest_path_length(giant_component)
-print("Average distnace in giant component (undirected): ", average_distance)
+print("************ E N D     O F    Q U E S T I O N 2 ************")
+
+# Q3.3
+ubetw_centrality = nx.betweenness_centrality(undirectedMentionGraph)
+dbetw_centrality = nx.betweenness_centrality(directedMentionGraph)
+
+for username, betweenness_centrality in ubetw_centrality.items():
+    print("Username: ", username, "undirected betw cent: ", betweenness_centrality)
+
+for username, betweenness_centrality_dorected in dbetw_centrality.items():
+    print("Username:", username, "directed betw cent: ", betweenness_centrality_dorected)
