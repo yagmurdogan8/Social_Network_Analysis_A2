@@ -69,18 +69,18 @@ print("************ E N D     O F    Q U E S T I O N 1 ************")
 
 # Q3.2
 # nodes
-print("Nodes: ", directedMentionGraph.nodes())
+# print("Nodes: ", directedMentionGraph.nodes())
 print("No of nodes: ", len(directedMentionGraph.nodes()))
 # edges
-print("Edges: ", directedMentionGraph.edges())
+# print("Edges: ", directedMentionGraph.edges())
 print("No of edges: ", len(directedMentionGraph.edges()))
 
 # strongly connected comp
 print("Strongly connected components: ", nx.strongly_connected_components(directedMentionGraph))
 strongly_connected_components = list(nx.strongly_connected_components(directedMentionGraph))
 print("Number of strongy connected components: ", len(strongly_connected_components))
-for i, component in enumerate(strongly_connected_components):
-    print("Size of strongly connected component ", i + 1, ": ", len(component))
+# for i, component in enumerate(strongly_connected_components):
+#     print("Size of strongly connected component ", i + 1, ": ", len(component))
 
 # weakly connected comp
 print("Weakly connected components: ", nx.weakly_connected_components(directedMentionGraph))
@@ -127,11 +127,28 @@ print("Undirected average clustering coefficient: ", undirected_average_clusteri
 print("************ E N D     O F    Q U E S T I O N 2 ************")
 
 # Q3.3
-ubetw_centrality = nx.betweenness_centrality(undirectedMentionGraph)
-dbetw_centrality = nx.betweenness_centrality(directedMentionGraph)
 
-for username, betweenness_centrality in ubetw_centrality.items():
-    print("Username: ", username, "undirected betw cent: ", betweenness_centrality)
+# # betweenness centrality - it takes ages
+# # burasi hic calismiyor
+#
+# ubetw_centrality = nx.centrality.betweenness_centrality(undirectedMentionGraph)
+# dbetw_centrality = nx.centrality.betweenness_centrality(directedMentionGraph)
+#
+# for username, betweenness_centrality in ubetw_centrality.items():
+#     print("Username: ", username, "undirected betw cent: ", betweenness_centrality)
+#
+# for username, betweenness_centrality_dorected in dbetw_centrality.items():
+#     print("Username:", username, "directed betw cent: ", betweenness_centrality_dorected)
 
-for username, betweenness_centrality_dorected in dbetw_centrality.items():
-    print("Username:", username, "directed betw cent: ", betweenness_centrality_dorected)
+# closeness centrality
+# ucloseness_centrality = nx.closeness_centrality(undirectedMentionGraph)
+# undirected olunca calismiyo
+# directedsa da ini var outu var
+
+dcloseness_centrality = nx.closeness_centrality(directedMentionGraph, distance='in')
+
+for i in range(20):
+    max_closeness_node = max(dcloseness_centrality, key=dcloseness_centrality.get)
+    max_closeness_value = dcloseness_centrality[max_closeness_node]
+    mentioned_users_list.pop(max_closeness_node)
+    print(max_closeness_node, max_closeness_value)
