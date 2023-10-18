@@ -89,7 +89,8 @@ print("Number of weakly connected components: ", len(weakly_connected_components
 # length is number of components but what is the difference between size and length?
 
 # density = 2m/n.(n-1)
-density = (2 * len(directedMentionGraph.edges())) / (len(directedMentionGraph.nodes()) * (len(directedMentionGraph.nodes()) - 1))
+density = (2 * len(directedMentionGraph.edges())) / (
+        len(directedMentionGraph.nodes()) * (len(directedMentionGraph.nodes()) - 1))
 print("Density of the network: ", density)
 
 # indegree and outdegree distributions
@@ -153,9 +154,7 @@ top_mentions = []
 for i in range(20):
     top_closeness_node = max(dcloseness_centrality, key=dcloseness_centrality.get)
     top_closeness_value = dcloseness_centrality[top_closeness_node]
-    if top_closeness_node in top_mentions:
-        continue
-    else:
+    if top_closeness_node not in top_mentions:
         top_mentions.append(top_closeness_node)
         print((i + 1), ". user's name: ", top_closeness_node, " value: ", top_closeness_value)
         i += 1
