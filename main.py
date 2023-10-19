@@ -131,15 +131,23 @@ print("************ E N D     O F    Q U E S T I O N 2 ************")
 
 # # betweenness centrality - it takes ages
 # # burasi hic calismiyor
-#
-# ubetw_centrality = nx.centrality.betweenness_centrality(undirectedMentionGraph)
-# dbetw_centrality = nx.centrality.betweenness_centrality(directedMentionGraph)
-#
-# for username, betweenness_centrality in ubetw_centrality.items():
-#     print("Username: ", username, "undirected betw cent: ", betweenness_centrality)
-#
-# for username, betweenness_centrality_dorected in dbetw_centrality.items():
-#     print("Username:", username, "directed betw cent: ", betweenness_centrality_dorected)
+top_mentions = []
+
+print("\n Top 20 mentions - with Betweenness Centrality: \n")
+
+dbetweenness_centrality = nx.dbetweenness_centrality(directedMentionGraph, distance='in')
+doutbetweenness_centrality = nx.doutbetweenness_centrality(directedMentionGraph, distance='out')
+betweenness_centrality = nx.betweenness_centrality(undirectedMentionGraph)
+
+for i in range(20):
+    top_between_node = max(betweenness_centrality, key=betweenness_centrality.get)
+    top_between_value = betweenness_centrality[top_between_node]
+    if top_between_node not in top_mentions:
+        top_mentions.append(top_between_node)
+        print((i + 1), ". user's name: @", top_between_node, " - value: ", top_between_value)
+        del betweenness_centrality[top_between_node]
+    else:
+        continue
 
 # closeness centrality
 # ucloseness_centrality = nx.closeness_centrality(undirectedMentionGraph)
@@ -150,8 +158,6 @@ print("\n Top 20 mentions - with Closeness Centrality: \n")
 
 dcloseness_centrality = nx.closeness_centrality(directedMentionGraph, distance='in')
 doutcloseness_centrality = nx.closeness_centrality(directedMentionGraph, distance='out')
-
-top_mentions = []
 
 for i in range(20):
     top_closeness_node = max(dcloseness_centrality, key=dcloseness_centrality.get)
@@ -167,10 +173,9 @@ print("\n Top 20 mentions - with Degree Centrality: \n")
 
 degree_centrality = nx.degree_centrality(directedMentionGraph)  # bu yonden bagimsizmis
 
-top_degree_node = max(degree_centrality, key=degree_centrality.get)
-top_degree_value = degree_centrality[top_degree_node]
 for i in range(20):
+    top_degree_node = max(degree_centrality, key=degree_centrality.get)
+    top_degree_value = degree_centrality[top_degree_node]
     top_mentions.append(top_degree_node)
     print((i + 1), ". user's name: @", top_degree_node, " - value: ", top_degree_value)
     del degree_centrality[top_degree_node]
-    i += 1
