@@ -135,16 +135,22 @@ top_mentions = []
 
 print("\n Top 20 mentions - with Betweenness Centrality: \n")
 
-dbetweenness_centrality = nx.dbetweenness_centrality(directedMentionGraph, distance='in')
-doutbetweenness_centrality = nx.doutbetweenness_centrality(directedMentionGraph, distance='out')
-betweenness_centrality = nx.betweenness_centrality(undirectedMentionGraph)
+between_centrality = nx.betweenness_centrality(directedMentionGraph)
+# edge_between_centrality = nx.edge_betweenness_centrality(undirectedMentionGraph)
 
-for i in range(20):
-    top_between_node = max(dbetweenness_centrality, key=dbetweenness_centrality.get)
-    top_between_value = dbetweenness_centrality[top_between_node]
-    top_mentions.append(top_between_node)
-    print((i + 1), ". user's name: @", top_between_node, " - value: ", top_between_value)
-    del dbetweenness_centrality[top_between_node]
+# i = 0
+# while i < 20:
+#     top_between_node = max(between_centrality, key=between_centrality.get)
+#     top_between_value = between_centrality.pop(top_between_node)
+#     print((i + 1), ". user's name: @", top_between_node, " - value: ", top_between_value)
+#     i += 1
+
+# for i in range(20):
+#     top_between_node = max(between_centrality, key=between_centrality.get)
+#     top_between_value = between_centrality[top_between_node]
+#     top_mentions.append(top_between_node)
+#     print((i + 1), ". user's name: @", top_between_node, " - value: ", top_between_value)
+#     del between_centrality[top_between_node]
 
 # closeness centrality
 # ucloseness_centrality = nx.closeness_centrality(undirectedMentionGraph)
