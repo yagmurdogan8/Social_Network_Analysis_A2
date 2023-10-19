@@ -146,6 +146,8 @@ print("************ E N D     O F    Q U E S T I O N 2 ************")
 # undirected olunca calismiyo
 # directedsa da ini var outu var
 
+print("\n Top 20 mentions - with Closeness Centrality: \n")
+
 dcloseness_centrality = nx.closeness_centrality(directedMentionGraph, distance='in')
 doutcloseness_centrality = nx.closeness_centrality(directedMentionGraph, distance='out')
 
@@ -158,3 +160,17 @@ for i in range(20):
         top_mentions.append(top_closeness_node)
         print((i + 1), ". user's name: @", top_closeness_node, " - value: ", top_closeness_value)
         del dcloseness_centrality[top_closeness_node]
+
+# degree centarlity
+
+print("\n Top 20 mentions - with Degree Centrality: \n")
+
+degree_centrality = nx.degree_centrality(directedMentionGraph)  # bu yonden bagimsizmis
+
+top_degree_node = max(degree_centrality, key=degree_centrality.get)
+top_degree_value = degree_centrality[top_degree_node]
+for i in range(20):
+    top_mentions.append(top_degree_node)
+    print((i + 1), ". user's name: @", top_degree_node, " - value: ", top_degree_value)
+    del degree_centrality[top_degree_node]
+    i += 1
