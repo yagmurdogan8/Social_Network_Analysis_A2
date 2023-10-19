@@ -140,14 +140,11 @@ doutbetweenness_centrality = nx.doutbetweenness_centrality(directedMentionGraph,
 betweenness_centrality = nx.betweenness_centrality(undirectedMentionGraph)
 
 for i in range(20):
-    top_between_node = max(betweenness_centrality, key=betweenness_centrality.get)
-    top_between_value = betweenness_centrality[top_between_node]
-    if top_between_node not in top_mentions:
-        top_mentions.append(top_between_node)
-        print((i + 1), ". user's name: @", top_between_node, " - value: ", top_between_value)
-        del betweenness_centrality[top_between_node]
-    else:
-        continue
+    top_between_node = max(dbetweenness_centrality, key=dbetweenness_centrality.get)
+    top_between_value = dbetweenness_centrality[top_between_node]
+    top_mentions.append(top_between_node)
+    print((i + 1), ". user's name: @", top_between_node, " - value: ", top_between_value)
+    del dbetweenness_centrality[top_between_node]
 
 # closeness centrality
 # ucloseness_centrality = nx.closeness_centrality(undirectedMentionGraph)
