@@ -156,5 +156,5 @@ for i in range(20):
     top_closeness_value = dcloseness_centrality[top_closeness_node]
     if top_closeness_node not in top_mentions:
         top_mentions.append(top_closeness_node)
-        print((i + 1), ". user's name: ", top_closeness_node, " value: ", top_closeness_value)
-        i += 1
+        print((i + 1), ". user's name: @", top_closeness_node, " - value: ", top_closeness_value)
+        del dcloseness_centrality[top_closeness_node]
