@@ -131,11 +131,7 @@ print("************ E N D     O F    Q U E S T I O N 2 ************")
 
 # # betweenness centrality - it takes ages
 # # burasi hic calismiyor
-top_mentions = []
-
-print("\n Top 20 mentions - with Betweenness Centrality: \n")
-
-between_centrality = nx.betweenness_centrality(directedMentionGraph)
+# between_centrality = nx.betweenness_centrality(directedMentionGraph)
 # edge_between_centrality = nx.edge_betweenness_centrality(undirectedMentionGraph)
 
 # i = 0
@@ -151,6 +147,17 @@ between_centrality = nx.betweenness_centrality(directedMentionGraph)
 #     top_mentions.append(top_between_node)
 #     print((i + 1), ". user's name: @", top_between_node, " - value: ", top_between_value)
 #     del between_centrality[top_between_node]
+
+top_mentions = []
+
+# common neighbor centrality
+
+print("\n Top 20 mentions - with Common neighbor Centrality: \n")
+
+cn_centrality = nx.common_neighbor_centrality(undirectedMentionGraph)
+top_cn_node = sorted(undirectedMentionGraph.nodes, key=undirectedMentionGraph.degree, reverse=True)[:20]
+top_cn_value = cn_centrality.pop(top_cn_node)
+print("Username: ", top_cn_node, "Value: ", top_cn_value)
 
 # closeness centrality
 # ucloseness_centrality = nx.closeness_centrality(undirectedMentionGraph)
