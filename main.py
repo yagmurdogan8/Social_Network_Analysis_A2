@@ -150,14 +150,19 @@ print("************ E N D     O F    Q U E S T I O N 2 ************")
 
 top_mentions = []
 
-# common neighbor centrality
+# eigen vector centrality
 
-print("\n Top 20 mentions - with Common neighbor Centrality: \n")
+print("\n Top 20 mentions - with Eigen Vector Centrality: \n")
 
-cn_centrality = nx.common_neighbor_centrality(undirectedMentionGraph)
-top_cn_node = sorted(undirectedMentionGraph.nodes, key=undirectedMentionGraph.degree, reverse=True)[:20]
-top_cn_value = cn_centrality.pop(top_cn_node)
-print("Username: ", top_cn_node, "Value: ", top_cn_value)
+ei_centrality = nx.eigenvector_centrality(undirectedMentionGraph)
+
+i = 0
+while i < 20:
+    top_ei_node = max(ei_centrality, key=ei_centrality.get)
+    top_ei_value = ei_centrality.pop(top_ei_node)
+    print((i + 1), ". user's name: @", top_ei_node, " - value: ", top_ei_value)
+    i += 1
+
 
 # closeness centrality
 # ucloseness_centrality = nx.closeness_centrality(undirectedMentionGraph)
@@ -189,3 +194,4 @@ for i in range(20):
     top_mentions.append(top_degree_node)
     print((i + 1), ". user's name: @", top_degree_node, " - value: ", top_degree_value)
     del degree_centrality[top_degree_node]
+
