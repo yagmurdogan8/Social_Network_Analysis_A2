@@ -65,7 +65,7 @@ with open("weighted_edge_list.csv", mode='w', newline='', encoding="utf-8") as o
         weight = data['weight']
         writer.writerow([source, target, weight])
 
-print("************ E N D     O F    Q U E S T I O N 1 ************")
+print("\n************ E N D     O F    Q U E S T I O N 1 ************")
 
 # Q3.2
 # nodes
@@ -125,7 +125,7 @@ print("Undirected average clustering coefficient: ", undirected_average_clusteri
 # average_distance = nx.average_shortest_path_length(giant_component)
 # print("Average distnace in giant component (undirected): ", average_distance)
 
-print("************ E N D     O F    Q U E S T I O N 2 ************")
+print("\n************ E N D     O F    Q U E S T I O N 2 ************")
 
 # Q3.3
 
@@ -152,9 +152,10 @@ top_mentions = []
 
 # eigen vector centrality
 
-print("\n Top 20 mentions - with Eigen Vector Centrality: \n")
-
 ei_centrality = nx.eigenvector_centrality(undirectedMentionGraph)
+direct_ei_centrality = nx.eigenvector_centrality(directedMentionGraph)
+
+print("\n Top 20 mentions - with Eigen Vector Centrality (Undirected Graph) : \n")
 
 i = 0
 while i < 20:
@@ -163,16 +164,36 @@ while i < 20:
     print((i + 1), ". user's name: @", top_ei_node, " - value: ", top_ei_value)
     i += 1
 
+print("\n Top 20 mentions - with Eigen Vector Centrality (Directed Graph) : \n")
+
+i = 0
+while i < 20:
+    top_dei_node = max(direct_ei_centrality, key=direct_ei_centrality.get)
+    top_dei_value = direct_ei_centrality.pop(top_dei_node)
+    print((i + 1), ". user's name: @", top_dei_node, " - value: ", top_dei_value)
+    i += 1
 
 # closeness centrality
 # ucloseness_centrality = nx.closeness_centrality(undirectedMentionGraph)
 # undirected olunca calismiyo
 # directedsa da ini var outu var
 
-print("\n Top 20 mentions - with Closeness Centrality: \n")
+print("\n Top 20 mentions - with Closeness Centrality (Undirected graph): \n")
+
+ucloseness_centrality = nx.closeness_centrality(undirectedMentionGraph)
+
+for i in range(20):
+    top_ucloseness_node = max(ucloseness_centrality, key=ucloseness_centrality.get)
+    top_ucloseness_value = ucloseness_centrality[top_ucloseness_node]
+    if top_ucloseness_node not in top_mentions:
+        top_mentions.append(top_ucloseness_node)
+        print((i + 1), ". user's name: @", top_ucloseness_node, " - value: ", top_ucloseness_value)
+        del ucloseness_centrality[top_ucloseness_node]
+
+
+print("\n Top 20 mentions - with Closeness Centrality (In degree): \n")
 
 dcloseness_centrality = nx.closeness_centrality(directedMentionGraph, distance='in')
-doutcloseness_centrality = nx.closeness_centrality(directedMentionGraph, distance='out')
 
 for i in range(20):
     top_closeness_node = max(dcloseness_centrality, key=dcloseness_centrality.get)
@@ -182,11 +203,25 @@ for i in range(20):
         print((i + 1), ". user's name: @", top_closeness_node, " - value: ", top_closeness_value)
         del dcloseness_centrality[top_closeness_node]
 
+print("\n Top 20 mentions - with Closeness Centrality (Out degree): \n")
+
+doutcloseness_centrality = nx.closeness_centrality(directedMentionGraph, distance='out')
+
+for i in range(20):
+    top_outcloseness_node = max(doutcloseness_centrality, key=doutcloseness_centrality.get)
+    top_outcloseness_value = doutcloseness_centrality[top_outcloseness_node]
+    if top_outcloseness_node not in top_mentions:
+        top_mentions.append(top_outcloseness_node)
+        print((i + 1), ". user's name: @", top_outcloseness_node, " - value: ", top_outcloseness_value)
+        del doutcloseness_centrality[top_outcloseness_node]
+
 # degree centarlity
 
-print("\n Top 20 mentions - with Degree Centrality: \n")
+degree_centrality = nx.degree_centrality(undirectedMentionGraph)  # bu yonden bagimsizmis
+in_degree_centrality = nx.in_degree_centrality(directedMentionGraph)
+out_degree_centrality = nx.out_degree_centrality(directedMentionGraph)
 
-degree_centrality = nx.degree_centrality(directedMentionGraph)  # bu yonden bagimsizmis
+print("\n Top 20 mentions - with Degree Centrality (Undirected Graph): \n")
 
 for i in range(20):
     top_degree_node = max(degree_centrality, key=degree_centrality.get)
@@ -194,4 +229,22 @@ for i in range(20):
     top_mentions.append(top_degree_node)
     print((i + 1), ". user's name: @", top_degree_node, " - value: ", top_degree_value)
     del degree_centrality[top_degree_node]
+
+print("\n Top 20 mentions - with Degree Centrality (In Degree): \n")
+
+for i in range(20):
+    top_indegree_node = max(in_degree_centrality, key=in_degree_centrality.get)
+    top_indegree_value = in_degree_centrality[top_indegree_node]
+    top_mentions.append(top_indegree_node)
+    print((i + 1), ". user's name: @", top_indegree_node, " - value: ", top_indegree_value)
+    del in_degree_centrality[top_indegree_node]
+
+print("\n Top 20 mentions - with Degree Centrality (Out Degree): \n")
+
+for i in range(20):
+    top_outdegree_node = max(out_degree_centrality, key=out_degree_centrality.get)
+    top_outdegree_value = out_degree_centrality[top_outdegree_node]
+    top_mentions.append(top_outdegree_node)
+    print((i + 1), ". user's name: @", top_outdegree_node, " - value: ", top_outdegree_value)
+    del out_degree_centrality[top_outdegree_node]
 
