@@ -1,4 +1,5 @@
 import csv
+import random
 import networkx as nx
 import urllib.request
 import matplotlib.pyplot as plt
@@ -37,7 +38,7 @@ for index, line in enumerate(lines):  # burada index almada sorun yasadim enum e
 
         mentioned_users_list[username] = mentioned_users
 
-        # Print mentioned users for the current user
+        # print mentioned users for the current user
         if mentioned_users:
             print(username, " mentioned: ", ", ".join(mentioned_users))
             print(len(mentioned_users))
@@ -79,14 +80,17 @@ print("No of edges: ", len(directedMentionGraph.edges()))
 print("Strongly connected components: ", nx.strongly_connected_components(directedMentionGraph))
 strongly_connected_components = list(nx.strongly_connected_components(directedMentionGraph))
 print("Number of strongy connected components: ", len(strongly_connected_components))
-# for i, component in enumerate(strongly_connected_components):
-#     print("Size of strongly connected component ", i + 1, ": ", len(component))
+
+for i, component in enumerate(strongly_connected_components):
+    print("Size of ", i + 1, ". strongly connected component : ", len(component))
 
 # weakly connected comp
 print("Weakly connected components: ", nx.weakly_connected_components(directedMentionGraph))
 weakly_connected_components = list(nx.weakly_connected_components(directedMentionGraph))
 print("Number of weakly connected components: ", len(weakly_connected_components))
-# length is number of components but what is the difference between size and length?
+
+for i, component in enumerate(strongly_connected_components):
+    print("Size of ", i + 1, ". weakly connected component : ", len(component))
 
 # density = 2m/n.(n-1)
 density = (2 * len(directedMentionGraph.edges())) / (
@@ -117,13 +121,54 @@ undirectedMentionGraph = directedMentionGraph.to_undirected()
 undirected_average_clustering_coefficient = nx.average_clustering(undirectedMentionGraph)
 print("Undirected average clustering coefficient: ", undirected_average_clustering_coefficient)
 
-# # giant component of the undirected graph
-# giant_component = max(nx.weakly_connected_components(undirectedMentionGraph), key=len)
-# # DEVAMINI YAPAMADIM HENUZ
-#
-# # average distance in giant comp
-# average_distance = nx.average_shortest_path_length(giant_component)
-# print("Average distnace in giant component (undirected): ", average_distance)
+subset_size = 1000
+all_nodes = list(undirectedMentionGraph.nodes())
+
+subsets = []
+for i in range(0, len(all_nodes), subset_size):
+    subset_nodes = all_nodes[i:i + subset_size]
+    subset_graph = undirectedMentionGraph.subgraph(subset_nodes)
+    subsets.append(subset_graph)
+
+giant_components_sub = []
+avg_distance_list = []
+avg_value = 0
+for subset in subsets:
+    connected_components = list(nx.connected_components(subset))
+    if connected_components:
+        giant_component = max(connected_components, key=len)
+        giant_components_sub.append(subset.subgraph(giant_component))
+
+for i, giant_component in enumerate(giant_components_sub):
+    average_distance = nx.average_shortest_path_length(giant_component)
+    avg_value += average_distance
+    avg_distance_list.append(average_distance)
+
+print("Average Distance in giant component: ", avg_value / len(avg_distance_list))
+
+giant_component = max(nx.connected_components(undirectedMentionGraph), key=len)
+giant_subgraph = undirectedMentionGraph.subgraph(giant_component)
+
+sample_size = 50  # no of nodes as a sample
+distance_distribution = {}
+
+sample_nodes = random.sample(giant_subgraph.nodes(), sample_size)
+
+for source_node in sample_nodes:
+    distances = nx.single_source_shortest_path_length(giant_subgraph, source_node)
+
+    for distance in distances.values():
+        if distance in distance_distribution:
+            distance_distribution[distance] += 1
+
+total_counts = sum(distance_distribution.values())
+distance_distribution = {distance: count / total_counts for distance, count in distance_distribution.items()}
+
+plt.hist(list(distance_distribution.values()), bins=20, color='r')
+plt.title('Distance Distribution of the Giant component')
+plt.xlabel('Distance')
+plt.ylabel('Frequency')
+plt.show()
 
 print("\n************ E N D     O F    Q U E S T I O N 2 ************")
 
@@ -248,3 +293,16 @@ for i in range(20):
     print((i + 1), ". user's name: @", top_outdegree_node, " - value: ", top_outdegree_value)
     del out_degree_centrality[top_outdegree_node]
 
+print("\n************ E N D     O F    Q U E S T I O N 3 ************")
+
+# Q3.4
+
+# Louvain Algorithm
+
+print("\n************ E N D     O F    Q U E S T I O N 4 ************")
+
+# Q3.6
+
+print("\n************ E N D     O F    Q U E S T I O N 6 ************")
+
+# Q3.7
