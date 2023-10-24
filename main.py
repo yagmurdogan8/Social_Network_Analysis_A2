@@ -395,55 +395,55 @@ for user, mentions in mentioned_users_list.items():
 
 # nodes
 # print("Nodes: ", directedMentionGraph.nodes())
-print("No of nodes: ", len(directedLargeMentionGraph.nodes()))
+print("No of nodes - Large dataset: ", len(directedLargeMentionGraph.nodes()))
 # edges
 # print("Edges: ", directedLargeMentionGraph.edges())
-print("No of edges: ", len(directedLargeMentionGraph.edges()))
+print("No of edges - Large dataset: ", len(directedLargeMentionGraph.edges()))
 
 # strongly connected comp
-print("Strongly connected components: ", nx.strongly_connected_components(directedLargeMentionGraph))
+print("Strongly connected components - Large dataset: ", nx.strongly_connected_components(directedLargeMentionGraph))
 strongly_connected_components = list(nx.strongly_connected_components(directedLargeMentionGraph))
-print("Number of strongy connected components: ", len(strongly_connected_components))
+print("Number of strongy connected components - Large dataset: ", len(strongly_connected_components))
 
 for i, component in enumerate(strongly_connected_components):
-    print("Size of ", i + 1, ". strongly connected component : ", len(component))
+    print("Size of ", i + 1, ". strongly connected component - Large dataset: ", len(component))
 
 # weakly connected comp
 print("Weakly connected components: ", nx.weakly_connected_components(directedLargeMentionGraph))
 weakly_connected_components = list(nx.weakly_connected_components(directedLargeMentionGraph))
-print("Number of weakly connected components: ", len(weakly_connected_components))
+print("Number of weakly connected components - Large dataset: ", len(weakly_connected_components))
 
 for i, component in enumerate(strongly_connected_components):
-    print("Size of ", i + 1, ". weakly connected component : ", len(component))
+    print("Size of ", i + 1, ". weakly connected component - Large dataset: ", len(component))
 
 # density = 2m/n.(n-1)
 density = (2 * len(directedLargeMentionGraph.edges())) / (
         len(directedLargeMentionGraph.nodes()) * (len(directedLargeMentionGraph.nodes()) - 1))
-print("Density of the network: ", density)
+print("Density of the network - Large dataset: ", density)
 
 # indegree and outdegree distributions
 indegree = dict(directedLargeMentionGraph.in_degree())
 outdegree = dict(directedLargeMentionGraph.out_degree())
 
 plt.hist(list(indegree.values()), bins=20, color='r')
-plt.title('Indegree Distribution')
+plt.title('Indegree Distribution - Large dataset')
 plt.xlabel('Indegree')
 plt.ylabel('Frequency')
 plt.show()
 
 plt.hist(list(outdegree.values()), bins=20, color='r')
-plt.title('Outdegree Distribution')
+plt.title('Outdegree Distribution - Large dataset')
 plt.xlabel('Outdegree')
 plt.ylabel('Frequency')
 plt.show()
 
 # average cc directed & undirected
 directed_large_average_clustering_coefficient = nx.average_clustering(directedLargeMentionGraph)
-print("Directed average clustering coefficint: ", directed_large_average_clustering_coefficient)
+print("Directed average clustering coefficint - Large dataset: ", directed_large_average_clustering_coefficient)
 
 undirectedLargeMentionGraph = directedLargeMentionGraph.to_undirected()
 undirected_large_average_clustering_coefficient = nx.average_clustering(undirectedLargeMentionGraph)
-print("Undirected average clustering coefficient: ", undirected_large_average_clustering_coefficient)
+print("Undirected average clustering coefficient - Large dataset: ", undirected_large_average_clustering_coefficient)
 
 subset_size = 1000
 all_nodes = list(undirectedLargeMentionGraph.nodes())
@@ -468,7 +468,7 @@ for i, giant_component in enumerate(giant_components_sub):
     avg_value += average_distance
     avg_distance_list.append(average_distance)
 
-print("Average Distance in giant component: ", avg_value / len(avg_distance_list))
+print("Average Distance in giant component - Large dataset: ", avg_value / len(avg_distance_list))
 
 giant_component = max(nx.connected_components(undirectedLargeMentionGraph), key=len)
 giant_subgraph = undirectedLargeMentionGraph.subgraph(giant_component)
